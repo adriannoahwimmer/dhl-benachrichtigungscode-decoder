@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DHL Benachrichtigungscode — Aufbau & Rechner</title>
+<meta name="description" content="Aufbau des 16-stelligen DHL / Deutsche Post Benachrichtigungscodes von der gelben Benachrichtigungskarte erklärt: Tag des Jahres, Wochentag, Sendungsnummer und Prüfziffer — mit Rechner zum selbst Nachrechnen.">
+<meta name="keywords" content="DHL Benachrichtigungscode, Deutsche Post Benachrichtigungskarte, Benachrichtigungscode berechnen, Abholcode, Packstation, Postfiliale, Prüfziffer, Aufbau, Sendungsnummer">
+<meta property="og:title" content="DHL Benachrichtigungscode — Aufbau & Rechner">
+<meta property="og:description" content="So ist der 16-stellige Benachrichtigungscode aufgebaut — zum Nachrechnen im Browser.">
+<meta property="og:type" content="website">
+<style>
+  :root{
+    --bg:#f4f4f2; --card:#ffffff; --ink:#15161a; --muted:#5d6068;
+    --line:#e3e3df; --accent:#c8102e; --accent-ink:#ffffff;
+    --a1:#2563eb; --a2:#0d9488; --a3:#b45309; --a4:#7c3aed;
+    --ok:#15803d; --bad:#b91c1c; --radius:14px;
+    --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#0f1012; --card:#191b1f; --ink:#ecedef; --muted:#9aa0a8;
+      --line:#2a2d33; --a1:#60a5fa; --a2:#2dd4bf; --a3:#fbbf24; --a4:#a78bfa;
+      --ok:#4ade80; --bad:#f87171;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0f1012; --card:#191b1f; --ink:#ecedef; --muted:#9aa0a8;
+    --line:#2a2d33; --a1:#60a5fa; --a2:#2dd4bf; --a3:#fbbf24; --a4:#a78bfa;
+    --ok:#4ade80; --bad:#f87171;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+    line-height:1.55;-webkit-text-size-adjust:100%}
+  .wrap{max-width:760px;margin:0 auto;padding:40px 16px 80px}
+  header h1{font-size:clamp(1.5rem,4vw,2.1rem);line-height:1.15;margin:0 0 .3em}
+  header p.lead{color:var(--muted);font-size:1.05rem;margin:0 0 1.4em}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:22px;margin:18px 0}
+  h2{font-size:1.2rem;margin:1.8em 0 .5em}
+  h3{font-size:1rem;margin:1.2em 0 .4em}
+  code,kbd{font-family:var(--mono);font-size:.92em}
+  .tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+  .tab{flex:1;min-width:140px;padding:10px 12px;border:1px solid var(--line);
+    background:transparent;color:var(--ink);border-radius:10px;cursor:pointer;
+    font:inherit;font-weight:600}
+  .tab[aria-selected="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+  label{display:block;font-weight:600;font-size:.9rem;margin:14px 0 6px}
+  input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;
+    background:var(--bg);color:var(--ink);font-family:var(--mono);font-size:1rem}
+  input:focus{outline:2px solid var(--accent);outline-offset:1px}
+  .hint{color:var(--muted);font-size:.82rem;margin-top:5px}
+  button.go{margin-top:16px;width:100%;padding:13px;border:0;border-radius:10px;
+    background:var(--accent);color:var(--accent-ink);font:inherit;font-weight:700;
+    font-size:1.02rem;cursor:pointer}
+  .out{margin-top:16px;padding:16px;border-radius:10px;border:1px dashed var(--line);
+    background:var(--bg);display:none}
+  .out.show{display:block}
+  .big{font-family:var(--mono);font-size:clamp(1.1rem,5vw,1.6rem);letter-spacing:.04em;
+    word-break:break-all;font-weight:700}
+  table{width:100%;border-collapse:collapse;margin-top:10px;font-size:.92rem}
+  td{padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+  td:first-child{color:var(--muted);white-space:nowrap}
+  .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:.8rem;font-weight:700}
+  .pill.ok{background:color-mix(in srgb,var(--ok) 18%,transparent);color:var(--ok)}
+  .pill.bad{background:color-mix(in srgb,var(--bad) 18%,transparent);color:var(--bad)}
+  .seg{font-family:var(--mono);font-weight:700;font-size:clamp(1rem,5vw,1.5rem);
+    letter-spacing:.03em;word-break:break-all}
+  .s1{color:var(--a1)} .s2{color:var(--a2)} .s3{color:var(--a3)} .s4{color:var(--a4)}
+  .legend{display:grid;grid-template-columns:1fr;gap:6px;margin-top:12px;font-size:.9rem}
+  .legend span{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:7px;vertical-align:middle}
+  .works{display:grid;grid-template-columns:1fr;gap:12px}
+  @media(min-width:560px){.works{grid-template-columns:1fr 1fr}}
+  .box{border:1px solid var(--line);border-radius:12px;padding:16px}
+  .box.yes{border-color:color-mix(in srgb,var(--ok) 50%,var(--line))}
+  .box.no{border-color:color-mix(in srgb,var(--bad) 50%,var(--line))}
+  .box h3{margin-top:0;display:flex;align-items:center;gap:8px}
+  .muted{color:var(--muted)}
+  footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);
+    color:var(--muted);font-size:.86rem}
+  a{color:var(--accent)}
+  .props{background:color-mix(in srgb,var(--a3) 12%,transparent);
+    border:1px solid color-mix(in srgb,var(--a3) 40%,var(--line))}
+  .disc{font-size:.84rem;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>DHL&nbsp;/ Deutsche&nbsp;Post Benachrichtigungscode</h1>
+  <p class="lead">Wie der 16-stellige Code auf der gelben Benachrichtigungskarte
+  aufgebaut ist — und ein Rechner zum selbst Nachrechnen.</p>
+</header>
+
+<div class="card">
+  <h2 style="margin-top:0">Welche Karte / welcher Code?</h2>
+  <div class="works">
+    <div class="box yes">
+      <h3><span class="pill ok">funktioniert</span></h3>
+      <p><b>Gelbe Benachrichtigungskarte</b> „Information zu Ihrer Sendung“.
+      Darauf steht ein fest aufgedruckter, <b>16-stelliger</b> „Benachrichtigungs&shy;code
+      zur Abholung“, z.&nbsp;B. <code>3045&nbsp;8178&nbsp;9705&nbsp;3451</code>.
+      Dieser Code ist statisch und lässt sich nachrechnen.</p>
+    </div>
+    <div class="box no">
+      <h3><span class="pill bad">funktioniert nicht</span></h3>
+      <p><b>Abholcode in der Post&nbsp;&amp;&nbsp;DHL App</b> für die Packstation:
+      <b>10-stellig</b>, beginnt mit <code>A</code>, erneuert sich alle 120&nbsp;Sekunden.
+      Der ist zeitbasiert und <b>nicht</b> aus festen Daten berechenbar.</p>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" aria-selected="true" id="t-dec">Code prüfen &amp; zerlegen</button>
+    <button class="tab" role="tab" aria-selected="false" id="t-gen">Code berechnen</button>
+  </div>
+
+  <section id="p-dec">
+    <label for="code">16-stelliger Benachrichtigungscode</label>
+    <input id="code" inputmode="numeric" placeholder="3045 8178 9705 3451" autocomplete="off">
+    <div class="hint">Leerzeichen egal. Wird nur in deinem Browser verarbeitet — nichts wird gesendet.</div>
+    <button class="go" id="go-dec">Zerlegen</button>
+    <div class="out" id="out-dec"></div>
+  </section>
+
+  <section id="p-gen" hidden>
+    <label for="trk">Sendungsnummer</label>
+    <input id="trk" inputmode="numeric" placeholder="00340433881789705345" autocomplete="off">
+    <label for="date">Zustelldatum (Tag des Zustellversuchs)</label>
+    <input id="date" type="date">
+    <div class="hint">Das Datum steht auf der Karte: „Eine persönliche Zustellung war am&nbsp;…“.</div>
+    <button class="go" id="go-gen">Berechnen</button>
+    <div class="out" id="out-gen"></div>
+  </section>
+</div>
+
+<h2>Aufbau des Codes</h2>
+<div class="card">
+  <div class="seg"><span class="s1">304</span><span class="s2">5</span><span class="s3">81789705345</span><span class="s4">1</span></div>
+  <div class="legend">
+    <div><span style="background:var(--a1)"></span><b>304</b> — Tag des Jahres der Zustellung (001–366). 304 = 31.&nbsp;Oktober.</div>
+    <div><span style="background:var(--a2)"></span><b>5</b> — Wochentag (Montag&nbsp;=&nbsp;0 … Sonntag&nbsp;=&nbsp;6). 5 = Samstag.</div>
+    <div><span style="background:var(--a3)"></span><b>81789705345</b> — die letzten 11 Ziffern der Sendungsnummer.</div>
+    <div><span style="background:var(--a4)"></span><b>1</b> — Prüfziffer über die 15 Stellen davor.</div>
+  </div>
+  <h3>Prüfziffer</h3>
+  <p class="muted" style="margin:0">Die ersten 15 Stellen von rechts abwechselnd mit
+  ×1 und ×3 gewichten, aufsummieren, dann:
+  <code>Prüfziffer = (10 − Summe&nbsp;mod&nbsp;10)&nbsp;mod&nbsp;10</code>.
+  Das ist ein GS1-/mod-10-Verfahren wie bei vielen Barcode-Standards.</p>
+</div>
+
+<div class="card props">
+  <h2 style="margin-top:0">Credits</h2>
+  <p style="margin:0">Der entscheidende Hinweis zum Aufbau kam von einer hilfsbereiten
+  Person an der Packstation — <b>Props an dich!</b> 🙌
+  Den Rest haben wir aus eigenen Benachrichtigungskarten rekonstruiert.</p>
+</div>
+
+<footer>
+  <p><b>Hinweis:</b> Inoffiziell und unabhängig. Keine Verbindung zu DHL oder
+  Deutsche Post. Durch Reverse-Engineering eigener Benachrichtigungskarten
+  gewonnen; auf Basis von nur wenigen Beispielen, daher ohne Gewähr.</p>
+  <p class="disc">Der Benachrichtigungscode ist kein alleiniger Zugangsschlüssel:
+  Die Abholung in der Filiale verlangt einen Ausweis, die Packstation den
+  App-Code. Dieses Projekt dient dem Verständnis des Zahlenaufbaus, nicht dazu,
+  diese Nachweise zu umgehen.</p>
+</footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var WD=["Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag","Sonntag"];
+  function digits(s){return (s||"").replace(/\D/g,"");}
+  function checkDigit(b15){
+    var s=0;
+    for(var i=0;i<b15.length;i++){
+      var d=+b15[b15.length-1-i];
+      s+= (i%2===0)? d : d*3;
+    }
+    return (10 - s%10)%10;
+  }
+  function decode(code){
+    code=digits(code);
+    if(code.length!==16) throw new Error("Der Code muss 16 Ziffern haben — erkannt: "+code.length+".");
+    var body=code.slice(0,15), cd=+code[15];
+    var exp=checkDigit(body);
+    return {doy:+code.slice(0,3), wd:+code[3], last11:code.slice(4,15),
+            cd:cd, exp:exp, ok:cd===exp};
+  }
+  function doyToDate(doy, year){
+    var d=new Date(Date.UTC(year||new Date().getFullYear(),0,doy));
+    return d.toLocaleDateString("de-DE",{day:"2-digit",month:"long",timeZone:"UTC"});
+  }
+  // tabs
+  var tDec=document.getElementById("t-dec"), tGen=document.getElementById("t-gen");
+  var pDec=document.getElementById("p-dec"), pGen=document.getElementById("p-gen");
+  function sel(dec){
+    tDec.setAttribute("aria-selected",dec); tGen.setAttribute("aria-selected",!dec);
+    pDec.hidden=!dec; pGen.hidden=dec;
+  }
+  tDec.onclick=function(){sel(true)}; tGen.onclick=function(){sel(false)};
+
+  document.getElementById("go-dec").onclick=function(){
+    var o=document.getElementById("out-dec");
+    o.className="out show";
+    try{
+      var r=decode(document.getElementById("code").value);
+      o.innerHTML=
+        '<table>'+
+        '<tr><td>Tag des Jahres</td><td><b>'+r.doy+'</b> ('+doyToDate(r.doy)+')</td></tr>'+
+        '<tr><td>Wochentag</td><td><b>'+r.wd+'</b> ('+(WD[r.wd]||"?")+')</td></tr>'+
+        '<tr><td>Sendungsnr. (letzte 11)</td><td><code>'+r.last11+'</code></td></tr>'+
+        '<tr><td>Prüfziffer</td><td><b>'+r.cd+'</b> '+
+          (r.ok?'<span class="pill ok">gültig</span>':
+                '<span class="pill bad">falsch — erwartet '+r.exp+'</span>')+'</td></tr>'+
+        '</table>';
+    }catch(e){ o.innerHTML='<span class="pill bad">Fehler</span> '+e.message; }
+  };
+  document.getElementById("go-gen").onclick=function(){
+    var o=document.getElementById("out-gen");
+    o.className="out show";
+    var trk=digits(document.getElementById("trk").value);
+    var dv=document.getElementById("date").value;
+    if(trk.length<11){ o.innerHTML='<span class="pill bad">Fehler</span> Sendungsnummer zu kurz.'; return; }
+    if(!dv){ o.innerHTML='<span class="pill bad">Fehler</span> Bitte ein Zustelldatum wählen.'; return; }
+    var dt=new Date(dv+"T00:00:00Z");
+    var start=new Date(Date.UTC(dt.getUTCFullYear(),0,0));
+    var doy=Math.floor((dt-start)/86400000);
+    var wd=(dt.getUTCDay()+6)%7; // So=0 -> Mo=0..So=6
+    var body=String(doy).padStart(3,"0")+wd+trk.slice(-11);
+    var code=body+checkDigit(body);
+    var pretty=code.replace(/(\d{4})(?=\d)/g,"$1 ");
+    o.innerHTML='<div class="muted" style="font-size:.85rem;margin-bottom:6px">Berechneter Benachrichtigungscode</div>'+
+      '<div class="big">'+pretty+'</div>'+
+      '<div class="muted" style="font-size:.85rem;margin-top:8px">Tag '+doy+' · '+(WD[wd]||"?")+'</div>';
+  };
+  // Prefill date with the sample day for convenience
+  try{ document.getElementById("date").value="2026-10-31"; }catch(e){}
+})();
+</script>
+</body>
+</html>

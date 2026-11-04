@@ -1,0 +1,9 @@
+{
+  "_comment": "Reale DHL-/Deutsche-Post-Benachrichtigungskarten, Personendaten entfernt.",
+  "struktur": "doy(3) + wochentag(1, Mo=0..So=6) + sendungsnr_letzte_11(11) + pruefziffer(1)",
+  "pruefziffer": "Stellen 1-15 von rechts abwechselnd x1,x3 summieren; (10 - summe%10)%10",
+  "vektoren": [
+    {"code": "3045817897053451", "sendungsnummer": "00340433881789705345", "zustelltag": "2026-10-31", "wochentag": "Samstag"},
+    {"code": "3045376541158376", "sendungsnummer": "00340434637654115837", "zustelltag": "2026-10-31", "wochentag": "Samstag"}
+  ]
+}
