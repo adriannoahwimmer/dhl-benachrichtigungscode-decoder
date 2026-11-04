@@ -1,8 +1,12 @@
 # DHL / Deutsche Post Benachrichtigungscode — Aufbau & Rechner
 
-**Wie ist der 16-stellige Benachrichtigungscode auf der gelben DHL-/Deutsche-Post-Benachrichtigungskarte aufgebaut?** Dieses Projekt erklärt den Aufbau und bietet einen Rechner, mit dem du den Code selbst nachrechnen und zerlegen kannst — direkt im Browser.
+Der **16-stellige Benachrichtigungscode** auf der gelben DHL-/Deutsche-Post-Benachrichtigungskarte ist kein Zufall: Er setzt sich aus **Tag der Einlieferung, Wochentag, Sendungsnummer und einer Prüfziffer** zusammen. Dieses Projekt erklärt den Aufbau und bietet einen **Rechner zum selbst Nachrechnen** — direkt im Browser, ohne Installation.
 
-➡️ **Rechner:** _(nach dem Push: GitHub Pages aktivieren → Link hier eintragen, z. B. `https://DEIN-NAME.github.io/dhl-benachrichtigungscode-decoder/`)_
+### ▶️ [Rechner öffnen](https://adriannoahwimmer.github.io/dhl-benachrichtigungscode-decoder/)
+
+_(Funktioniert, sobald GitHub Pages aktiviert ist — siehe [unten](#-rechner-aktivieren-einmalig).)_
+
+![Beispiel einer Benachrichtigungskarte mit markiertem Benachrichtigungscode](docs/beispiel-karte.jpg)
 
 > ⚠️ Inoffiziell & unabhängig. Keine Verbindung zu DHL oder Deutsche Post. Durch Reverse-Engineering **eigener** Benachrichtigungskarten entstanden, auf Basis weniger Beispiele — **ohne Gewähr**. Nur zu Bildungszwecken.
 
@@ -12,8 +16,16 @@
 
 | | |
 |---|---|
-| ✅ **Funktioniert** | Die **gelbe Benachrichtigungskarte** „Information zu Ihrer Sendung“ mit fest aufgedrucktem **16-stelligen** „Benachrichtigungscode zur Abholung“, z. B. `3045 8178 9705 3451`. Statisch → berechenbar. |
-| ❌ **Funktioniert nicht** | Der **Abholcode in der Post & DHL App** für die Packstation: **10-stellig**, beginnt mit `A` (z. B. `A 616 867 731`), erneuert sich alle 120 Sekunden. Zeitbasiert → **nicht** aus festen Daten berechenbar. |
+| ✅ **Funktioniert** | Die **gelbe Benachrichtigungskarte** „Information zu Ihrer Sendung“ mit fest aufgedrucktem **16-stelligen** Benachrichtigungscode, z. B. `3045 8178 9705 3451`. Statisch → berechenbar. |
+| ❌ **Funktioniert nicht** | Der **Abholcode in der Post & DHL App** für die Packstation: **10-stellig**, beginnt mit `A` (z. B. `A 616 867 731`), erneuert sich alle 120 Sekunden. Zeitbasiert → **nicht** berechenbar. |
+
+## So nutzt du den Rechner (auch ohne Programmierkenntnisse)
+
+1. **[Rechner öffnen](https://adriannoahwimmer.github.io/dhl-benachrichtigungscode-decoder/)** (Link oben).
+2. Zwei Möglichkeiten:
+   - **Code prüfen & zerlegen:** 16-stelligen Code eingeben → der Rechner zeigt Tag, Wochentag, Sendungsnummer und ob die Prüfziffer stimmt.
+   - **Code berechnen:** Sendungsnummer + Zustelldatum eingeben → der Rechner baut den kompletten Code.
+3. Alles läuft **nur in deinem Browser** — es wird nichts hochgeladen oder gespeichert.
 
 ## Aufbau des 16-stelligen Codes
 
@@ -28,7 +40,7 @@
 
 | Stellen | Bedeutung | Beispiel |
 |--------:|-----------|----------|
-| 1–3 | Tag des Jahres der Zustellung (`001`–`366`) | `304` → 31.10. |
+| 1–3 | Tag des Jahres (Datum auf der Karte, `001`–`366`) | `304` → 31.10. |
 | 4 | Wochentag, Montag = 0 … Sonntag = 6 | `5` → Samstag |
 | 5–15 | die letzten 11 Ziffern der Sendungsnummer | `81789705345` |
 | 16 | Prüfziffer (GS1-/mod-10) | `1` |
@@ -41,22 +53,14 @@ Die ersten 15 Stellen von **rechts** abwechselnd mit **×1** und **×3** gewicht
 Prüfziffer = (10 − Summe mod 10) mod 10
 ```
 
-Das ist ein klassisches GS1-/mod-10-Verfahren, wie es in vielen Barcode-Standards vorkommt. Es erkennt Tippfehler — es ist **keine** Zugangssicherung.
+Ein klassisches GS1-/mod-10-Verfahren wie in vielen Barcode-Standards. Es erkennt Tippfehler — es ist **keine** Zugangssicherung.
 
-## Nutzung (Python)
+## Für Entwickler: Python
 
 ```bash
 python decode.py                 # Selbsttest + Beispiele
 python decode.py decode 3045817897053451
 python decode.py gen 00340433881789705345 2026-10-31
-```
-
-```python
-from decode import generate, decode
-import datetime as dt
-
-generate("00340433881789705345", dt.date(2026, 10, 31))  # -> '3045817897053451'
-decode("3045817897053451")["pruefziffer_ok"]             # -> True
 ```
 
 ## Testvektoren
@@ -68,19 +72,25 @@ Reale Karten, Personendaten entfernt (siehe [`test_vectors.json`](test_vectors.j
 | `3045 8178 9705 3451` | `0034 0433 8817 8970 5345` | Sa, 31.10.2026 |
 | `3045 3765 4115 8376` | `0034 0434 6376 5411 5837` | Sa, 31.10.2026 |
 
-## Credits
+## 🔧 Rechner aktivieren (einmalig)
 
-Die Grundidee — dass sich der Code aus **Prüfziffer + Sendungsnummer + Tag der Einlieferung** zusammensetzt — kam von einer hilfsbereiten Person an der Packstation. **Props an dich!** 🙌 Falls du dich meldest, verlinke ich dich gern, so wie du es möchtest. Die genaue Formel und die Stellenaufteilung wurden daraus aus eigenen Benachrichtigungskarten rekonstruiert.
+Damit der Browser-Rechner live geht: **Settings → Pages → Source: `main` / `/ (root)` → Save.** Nach 1–2 Minuten ist er unter der oben verlinkten Adresse erreichbar.
+
+## Wie das entstand
+
+Die **Grundidee** — dass sich der Code aus **Prüfziffer + Sendungsnummer + Tag der Einlieferung** zusammensetzt — kam von einer hilfsbereiten Person an der Packstation. **Props an dich!** 🙌 Falls du dich meldest, verlinke ich dich gern, so wie du es möchtest.
+
+Die genaue Formel und die Stellenaufteilung habe ich daraus per Reverse-Engineering mit **Claude Code (Claude Opus 5.5)** aus meinen eigenen Benachrichtigungskarten rekonstruiert.
 
 ## Mithelfen
 
-Der Aufbau basiert bisher nur auf wenigen Karten vom selben Tag. Besonders hilfreich: **Codes von anderen Wochentagen**, um die Wochentag-Stelle und die Prüfziffer über mehr Fälle zu bestätigen. Gerne ein Issue mit (anonymisiertem) Code + Sendungsnummer + Datum öffnen.
+Der Aufbau basiert bisher nur auf wenigen Karten vom selben Tag. Besonders wertvoll: **Codes von anderen Wochentagen**, um die Wochentag-Stelle und die Prüfziffer breiter zu bestätigen. Gerne ein Issue mit (anonymisiertem) Code + Sendungsnummer + Datum öffnen.
 
 > 🔒 **Privatsphäre:** Beim Teilen von Fotos oder Codes bitte Name, Anschrift und die volle Sendungsnummer schwärzen.
 
 ## Haftungsausschluss
 
-Der Benachrichtigungscode ist kein alleiniger Zugangsschlüssel: Die Abholung in der Filiale verlangt einen Ausweis, die Packstation den App-Code. Dieses Repo dient dem Verständnis des Zahlenaufbaus, nicht dazu, Identitäts- oder Abholnachweise zu umgehen.
+Der Benachrichtigungscode ist kein alleiniger Zugangsschlüssel: Die Abholung in der Filiale verlangt einen Ausweis, die Packstation den App-Code. Dieses Repo dient dem Verständnis des Zahlenaufbaus, nicht dazu, Nachweise zu umgehen.
 
 ## Lizenz
 
