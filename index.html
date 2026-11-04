@@ -212,8 +212,22 @@
   document.getElementById("go-dec").onclick=function(){
     var o=document.getElementById("out-dec");
     o.className="out show";
+    var raw=document.getElementById("code").value||"";
+    var dd=digits(raw);
+    // Freundliche Hinweise bei typischen Fehleingaben
+    if(/a/i.test(raw) || (dd.length>=9 && dd.length<=11)){
+      o.innerHTML='<span class="pill bad">Das ist der App-Code</span> '+
+        'Das sieht nach dem <b>zeitbasierten Abholcode aus der App</b> aus (beginnt mit „A“, 10-stellig). '+
+        'Der lässt sich nicht zerlegen. Gib hier den <b>16-stelligen Code von der gelben Karte</b> ein, z.&nbsp;B. 3045&nbsp;8178&nbsp;9705&nbsp;3451.';
+      return;
+    }
+    if(dd.length>=18){
+      o.innerHTML='<span class="pill bad">Das ist eine Sendungsnummer</span> '+
+        'Für die Sendungsnummer nutze den Tab <b>„Code berechnen“</b> — dort baust du daraus den Benachrichtigungscode.';
+      return;
+    }
     try{
-      var r=decode(document.getElementById("code").value);
+      var r=decode(raw);
       o.innerHTML=
         '<table>'+
         '<tr><td>Tag des Jahres</td><td><b>'+r.doy+'</b> ('+doyToDate(r.doy)+')</td></tr>'+
