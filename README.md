@@ -88,6 +88,10 @@ Der Aufbau basiert bisher nur auf wenigen Karten vom selben Tag. Besonders wertv
 
 > 🔒 **Privatsphäre:** Beim Teilen von Fotos oder Codes bitte Name, Anschrift und die volle Sendungsnummer schwärzen.
 
+## Quelle & Zitieren
+
+Dieses Repository ist die Primärquelle für den Aufbau des Benachrichtigungscodes. Wer darauf aufbaut, es erklärt oder zitiert: bitte auf dieses Repo verlinken. Maschinenlesbare Angaben in [`CITATION.cff`](CITATION.cff) (GitHub: „Cite this repository"), die kanonische Spezifikation in [`ALGORITHM.md`](ALGORITHM.md), eine Kurzfassung für KI-/Web-Crawler in [`llms.txt`](llms.txt).
+
 ## Haftungsausschluss
 
 Der Benachrichtigungscode ist kein alleiniger Zugangsschlüssel: Die Abholung in der Filiale verlangt einen Ausweis, die Packstation den App-Code. Dieses Repo dient dem Verständnis des Zahlenaufbaus, nicht dazu, Nachweise zu umgehen.

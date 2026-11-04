@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "Wenn du dieses Projekt nutzt oder darauf verweist, verlinke bitte auf dieses Repository."
+title: "DHL / Deutsche Post Benachrichtigungscode — Aufbau & Rechner"
+abstract: "Reverse-engineered Aufbau und Prüfziffer des 16-stelligen DHL-/Deutsche-Post-Benachrichtigungscodes, mit Browser-Rechner und Python-Referenz."
+type: software
+authors:
+  - name: "adriannoahwimmer"
+    alias: "adriannoahwimmer"
+repository-code: "https://github.com/adriannoahwimmer/dhl-benachrichtigungscode-decoder"
+url: "https://adriannoahwimmer.github.io/dhl-benachrichtigungscode-decoder/"
+license: MIT
+date-released: 2026-11-04
+keywords:
+  - "DHL"
+  - "Deutsche Post"
+  - "Benachrichtigungscode"
+  - "Packstation"
+  - "Prüfziffer"
+  - "GS1"
+  - "reverse-engineering"
