@@ -30,7 +30,7 @@ Der **16-stellige Benachrichtigungscode** auf der gelben DHL-/Deutsche-Post-Bena
 
 Beide Eingaben für den Rechner stehen in der DHL-Sendungsverfolgung:
 
-1. **[DHL Sendungsverfolgung](https://www.dhl.de/de/privatkunden/pakete-verfolgen.html)** öffnen (Web oder Post & DHL App).
+1. **[DHL Sendungsverfolgung](https://www.dhl.de/de/privatkunden/dhl-sendungsverfolgung.html)** öffnen (Web oder Post & DHL App).
 2. **Sendungsnummer** eingeben — sie steht in der Versandbestätigung des Shops oder auf der gelben Benachrichtigungskarte.
 3. Liegt das Paket in einer Packstation/Filiale, wirst du nach der **Empfänger-Postleitzahl** gefragt → eingeben, dann werden die Details sichtbar.
 4. Im **„Detaillierten Sendungsverlauf"** steht der Tag, an dem die Sendung in die Packstation/Filiale kam („… liegt in der Packstation … zur Abholung bereit", mit Datum). Dieses **Datum** und die **Sendungsnummer** sind deine beiden Eingaben.

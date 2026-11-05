@@ -147,11 +147,14 @@
   </section>
 
   <section id="p-gen" hidden>
+    <div style="background:color-mix(in srgb,var(--accent) 8%,transparent);border:1px solid color-mix(in srgb,var(--accent) 32%,var(--line));border-radius:10px;padding:12px 14px;margin-bottom:14px;font-size:.9rem;line-height:1.5">
+      📦 Angaben noch nicht zur Hand? <a href="https://www.dhl.de/de/privatkunden/dhl-sendungsverfolgung.html" target="_blank" rel="noopener" style="color:var(--accent);font-weight:700">DHL-Sendungsverfolgung öffnen</a> → dort <b>Sendungsnummer</b> + <b>Empfänger-Postleitzahl</b> eingeben und im Sendungsverlauf den <b>Tag ablesen, an dem das Paket in die Packstation/Filiale kam</b>.
+    </div>
     <label for="trk">Sendungsnummer</label>
     <input id="trk" inputmode="numeric" placeholder="00340433881789705345" autocomplete="off">
-    <label for="date">Zustelldatum (Tag des Zustellversuchs)</label>
+    <label for="date">Datum (Tag in der Packstation/Filiale)</label>
     <input id="date" type="date">
-    <div class="hint">Das Datum steht auf der Karte: „Eine persönliche Zustellung war am&nbsp;…“.</div>
+    <div class="hint">Der Tag, an dem das Paket in die Packstation/Filiale kam — steht auf der Karte („… Zustellung war am&nbsp;…") und im DHL-Sendungsverlauf.</div>
     <button class="go" id="go-gen">Berechnen</button>
     <div class="out" id="out-gen"></div>
   </section>
