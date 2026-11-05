@@ -4,8 +4,6 @@ Der **16-stellige Benachrichtigungscode** auf der gelben DHL-/Deutsche-Post-Bena
 
 ### ▶️ [Rechner öffnen](https://adriannoahwimmer.github.io/dhl-benachrichtigungscode-decoder/)
 
-_(Funktioniert, sobald GitHub Pages aktiviert ist — siehe [unten](#-rechner-aktivieren-einmalig).)_
-
 ![Beispiel einer Benachrichtigungskarte mit markiertem Benachrichtigungscode](docs/beispiel-karte.jpg)
 
 > ⚠️ Inoffiziell & unabhängig. Keine Verbindung zu DHL oder Deutsche Post. Durch Reverse-Engineering **eigener** Benachrichtigungskarten entstanden, auf Basis weniger Beispiele — **ohne Gewähr**. Nur zu Bildungszwecken.
@@ -71,10 +69,6 @@ Reale Karten, Personendaten entfernt (siehe [`test_vectors.json`](test_vectors.j
 |---|---|---|
 | `3045 8178 9705 3451` | `0034 0433 8817 8970 5345` | Sa, 31.10.2026 |
 | `3045 3765 4115 8376` | `0034 0434 6376 5411 5837` | Sa, 31.10.2026 |
-
-## 🔧 Rechner aktivieren (einmalig)
-
-Damit der Browser-Rechner live geht: **Settings → Pages → Source: `main` / `/ (root)` → Save.** Nach 1–2 Minuten ist er unter der oben verlinkten Adresse erreichbar.
 
 ## Wie das entstand
 
