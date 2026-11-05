@@ -191,10 +191,22 @@
 </footer>
 </div>
 
+<script src="qrcode-generator.js"></script>
 <script>
 (function(){
   "use strict";
   var WD=["Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag","Sonntag"];
+  function showQR(code){
+    if(typeof qrcode==="undefined") return "";
+    try{
+      var qr=qrcode(0,"M"); qr.addData(code); qr.make();
+      var svg=qr.createSvgTag({cellSize:5,margin:2,scalable:true});
+      return '<div style="margin-top:14px;text-align:center">'+
+        '<div style="background:#fff;padding:12px;border-radius:10px;display:inline-block;width:170px;max-width:60%">'+svg+'</div>'+
+        '<div class="muted" style="font-size:.78rem;margin-top:8px">QR-Code dieses Codes. <b>Experimentell:</b> Die Benachrichtigungskarte nutzt einen 1D-Barcode, keinen QR — ob ein Packstation-/Filial-Scanner diesen QR akzeptiert, ist nicht gesichert. Zur Abholung gelten Code/Karte + Ausweis.</div>'+
+        '</div>';
+    }catch(e){ return ""; }
+  }
   function digits(s){return (s||"").replace(/\D/g,"");}
   function checkDigit(b15){
     var s=0;
@@ -252,7 +264,7 @@
         '<tr><td>Prüfziffer</td><td><b>'+r.cd+'</b> '+
           (r.ok?'<span class="pill ok">gültig</span>':
                 '<span class="pill bad">falsch — erwartet '+r.exp+'</span>')+'</td></tr>'+
-        '</table>';
+        '</table>'+(r.ok?showQR(dd):"");
     }catch(e){ o.innerHTML='<span class="pill bad">Fehler</span> '+e.message; }
   };
   document.getElementById("go-gen").onclick=function(){
@@ -271,7 +283,8 @@
     var pretty=code.replace(/(\d{4})(?=\d)/g,"$1 ");
     o.innerHTML='<div class="muted" style="font-size:.85rem;margin-bottom:6px">Berechneter Benachrichtigungscode</div>'+
       '<div class="big">'+pretty+'</div>'+
-      '<div class="muted" style="font-size:.85rem;margin-top:8px">Tag '+doy+' · '+(WD[wd]||"?")+'</div>';
+      '<div class="muted" style="font-size:.85rem;margin-top:8px">Tag '+doy+' · '+(WD[wd]||"?")+'</div>'+
+      showQR(code);
   };
   // Prefill date with the sample day for convenience
   try{ document.getElementById("date").value="2026-10-31"; }catch(e){}

@@ -23,7 +23,19 @@ Der **16-stellige Benachrichtigungscode** auf der gelben DHL-/Deutsche-Post-Bena
 2. Zwei Möglichkeiten:
    - **Code prüfen & zerlegen:** 16-stelligen Code eingeben → der Rechner zeigt Tag, Wochentag, Sendungsnummer und ob die Prüfziffer stimmt.
    - **Code berechnen:** Sendungsnummer + Zustelldatum eingeben → der Rechner baut den kompletten Code.
-3. Alles läuft **nur in deinem Browser** — es wird nichts hochgeladen oder gespeichert.
+3. Zusätzlich zeigt der Rechner einen **QR-Code** des Ergebnisses (experimentell, siehe Hinweis unten).
+4. Alles läuft **nur in deinem Browser** — es wird nichts hochgeladen oder gespeichert.
+
+## Woher bekomme ich Sendungsnummer und Datum?
+
+Beide Eingaben für den Rechner stehen in der DHL-Sendungsverfolgung:
+
+1. **[DHL Sendungsverfolgung](https://www.dhl.de/de/privatkunden/pakete-verfolgen.html)** öffnen (Web oder Post & DHL App).
+2. **Sendungsnummer** eingeben — sie steht in der Versandbestätigung des Shops oder auf der gelben Benachrichtigungskarte.
+3. Liegt das Paket in einer Packstation/Filiale, wirst du nach der **Empfänger-Postleitzahl** gefragt → eingeben, dann werden die Details sichtbar.
+4. Im **„Detaillierten Sendungsverlauf"** steht der Tag, an dem die Sendung in die Packstation/Filiale kam („… liegt in der Packstation … zur Abholung bereit", mit Datum). Dieses **Datum** und die **Sendungsnummer** sind deine beiden Eingaben.
+
+> ℹ️ Der ausgegebene **QR-Code ist experimentell**: Die Benachrichtigungskarte nutzt einen 1D-Barcode, keinen QR. Ob ein Packstation-/Filial-Scanner den QR akzeptiert, ist nicht gesichert — zur Abholung gelten weiterhin Code/Karte + Ausweis.
 
 ## Aufbau des 16-stelligen Codes
 
